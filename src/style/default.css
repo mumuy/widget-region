@@ -1,0 +1,233 @@
+:host {
+    display: inline-block;
+    vertical-align: middle;
+    container-type: inline-size;
+    font-family: Arial,Helvetica,"Microsoft Yahei";
+    font-size: 14px;
+    aspect-ratio: 1;
+    min-width: 320px;
+    height: 32px;
+    padding: 0 10px;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.mod-region{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.mod-region input[type="text"]{
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: none;
+    box-sizing: border-box;
+    outline: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+dialog{
+    position: relative;
+    left: 0; 
+    top: 2px;
+    z-index: 999999;
+    border: none;
+}
+.picker-container{
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: 320px;
+    padding: 0;
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.picker-container .picker-head{
+    position: relative;
+    background: #f6f8fa;
+    border-bottom: 1px solid #f0f0f0;
+    line-height: 36px;
+    font-size: 16px;
+}
+.picker-container .picker-head .picker-title{
+    padding: 0 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.picker-container .picker-head .cancel{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    line-height: 36px;
+    text-indent: -33em;
+    font-size: 16px;
+    cursor: pointer;
+    overflow: hidden;
+}
+.picker-container .picker-head .cancel::before{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    content: '';
+    width: 1px;
+    height: 24px;
+    background: #5b636d;
+    transform: translate(-50%,-50%) rotate(45deg);
+}
+.picker-container .picker-head .cancel::after{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    content: '';
+    width: 1px;
+    height: 24px;
+    background: #5b636d;
+    transform: translate(-50%,-50%) rotate(-45deg);
+}
+.picker-container .picker-head .cancel:hover{
+    background: rgba(0,0,0,0.025);
+}
+.picker-container .picker-head .selected-list{
+    display: flex;
+    padding: 0 5px;
+    list-style: none;
+    background: rgba(0,0,0,0.025);
+    overflow: auto;
+}
+.picker-container .picker-head .selected-list li{
+    position: relative;
+    padding: 0 10px;
+    line-height: 32px;
+    white-space: nowrap;
+    font-size: 14px;
+    color: #5b636d;
+    cursor: pointer;
+}
+.picker-container .picker-head .selected-list li:empty{
+    display: none;
+}
+.picker-container .picker-head .selected-list li:not(:empty)::before{
+    position: absolute;
+    left: -8px;
+    top: 50%;
+    content: '';
+    width: 8px;
+    height: 8px;
+    margin-top: -5px;
+    border-right: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+    transform: rotate(-45deg);
+}
+.picker-container .picker-head .selected-list li:first-child::before{
+    display: none;
+}
+.picker-container .picker-body{
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+.picker-container .picker-body .picker-content{
+    display: flex;
+    height: 100%;
+}
+.picker-container .picker-body ul{
+    flex: 1;
+    max-width: 33.333333%;
+    height: 100%;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+.picker-container .picker-body ul:empty{
+    display: none;
+}
+.picker-container .picker-body ul::-webkit-scrollbar{
+    width: 5px;
+    height: 5px;
+}
+.picker-container .picker-body ul::-webkit-scrollbar-track{
+    background: rgba(0,0,0,0.025);
+}
+.picker-container .picker-body ul::-webkit-scrollbar-thumb{
+    background: rgba(0,0,0,0.15);
+}
+.picker-container .picker-body li{
+    position: relative;
+    padding: 0 15px;
+    line-height: 32px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+.picker-container .picker-body li:hover{
+    background: rgba(0,0,0,0.025);
+}
+.picker-container .picker-body li.active{
+    background: #2095f2;
+    color: #fff;
+}
+
+dialog:modal{
+    position: fixed;
+    left: 0;
+    top: auto;
+    bottom: -50%;
+    z-index: 999999;
+    min-width: 100%;
+    transition: all 0.25s ease;
+}
+dialog:modal[open]{
+    bottom: 0;
+}
+dialog:modal::backdrop{
+    backdrop-filter: blur(3px);
+}
+dialog:modal .picker-container{
+    width: 100%;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+}
+dialog:modal .picker-container .picker-body ul{
+    flex: none;
+    width: 100%;
+    max-width: 100%;
+}
+dialog:modal .picker-container .picker-body ul:empty{
+    display: block;
+}
+dialog:modal .picker-container .picker-content{
+    transition: all 0.3s ease;
+    transform: translateX(0);
+}
+dialog:modal[data-level="city"] .picker-container .picker-content{
+    transform: translateX(-100%);
+}
+dialog:modal[data-level="district"] .picker-container .picker-content{
+    transform: translateX(-200%);
+}
+
+@starting-style {
+    dialog:modal{
+        bottom: -50%;
+    }  
+    dialog:modal[open]{
+        bottom: -50%;
+    }
+}
