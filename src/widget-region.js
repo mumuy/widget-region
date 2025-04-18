@@ -1,37 +1,19 @@
-import cn from './data/cn.js';
+import {getItem,getList,getChildren,getTree} from './module/method.js';
 import styleSheet from './style/default.css' with { type: 'css'};
 
 class WidgetRegion extends HTMLElement {
+    static formAssociated = true;
+    #internals;
     #isLoaded = false;
     #cache;
-    #dataMap = cn;
     #province;
     #city;
     #district;
-    #childrenMap = {};
     constructor() {
         super();
         const _ = this;
+        _.#internals = this.attachInternals();
         _.attachShadow({mode:'open'});
-        // 映射子级数据
-        _.#childrenMap['000000'] = {};
-        Object.entries(_.#dataMap).forEach(([code,name])=>{
-            if(code.match(/0000$/)){
-                _.#childrenMap['000000'][code] = name;
-            }else if(code.match(/00$/)||code.match(/90\d{2}$/)||code.match(/^(11|12|31|50|81|82)/)){     // 地级市、省辖县级市、直辖市或特别行政区下属
-                const provinceCode = code.replace(/\d{4}$/,'0000');
-                if(!_.#childrenMap[provinceCode]){
-                    _.#childrenMap[provinceCode] = {};
-                }
-                _.#childrenMap[provinceCode][code] = name;
-            }else{
-                const cityCode = code.replace(/\d{2}$/,'00');
-                if(!_.#childrenMap[cityCode]){
-                    _.#childrenMap[cityCode] = {};
-                }
-                _.#childrenMap[cityCode][code] = name;
-            }
-        });
         const userAgent = window.navigator.userAgent;
         _.device = userAgent.includes('Mobile')?'mobile':'desktop';
     }
@@ -145,15 +127,22 @@ class WidgetRegion extends HTMLElement {
                 const $province = _.$provinceList.querySelector('.active');
                 const $city = _.$cityList.querySelector('.active');
                 const $district = _.$districtList.querySelector('.active');
-                let offset = $province.getBoundingClientRect().top-$province.parentNode.getBoundingClientRect().top+$province.parentNode.scrollTop||0;
-                offset -= _.$pickerBody.clientHeight/2 - 16;
-                _.$provinceList.scrollTo({top:offset,behavior:'instant'});
-                offset = $city.getBoundingClientRect().top-$city.parentNode.getBoundingClientRect().top+$city.parentNode.scrollTop||0;
-                offset -= _.$pickerBody.clientHeight/2 - 16;
-                _.$cityList.scrollTo({top:offset,behavior:'instant'});
-                offset = $district.getBoundingClientRect().top-$district.parentNode.getBoundingClientRect().top+$district.parentNode.scrollTop||0;
-                offset -= _.$pickerBody.clientHeight/2 - 16;
-                _.$districtList.scrollTo({top:offset,behavior:'instant'});
+                let offset;
+                if($province){
+                    offset = $province.getBoundingClientRect().top-$province.parentNode.getBoundingClientRect().top+$province.parentNode.scrollTop||0;
+                    offset -= _.$pickerBody.clientHeight/2 - 16;
+                    _.$provinceList.scrollTo({top:offset,behavior:'instant'});
+                }
+                if($city){
+                    offset = $city.getBoundingClientRect().top-$city.parentNode.getBoundingClientRect().top+$city.parentNode.scrollTop||0;
+                    offset -= _.$pickerBody.clientHeight/2 - 16;
+                    _.$cityList.scrollTo({top:offset,behavior:'instant'});
+                }
+                if($district){
+                    offset = $district.getBoundingClientRect().top-$district.parentNode.getBoundingClientRect().top+$district.parentNode.scrollTop||0;
+                    offset -= _.$pickerBody.clientHeight/2 - 16;
+                    _.$districtList.scrollTo({top:offset,behavior:'instant'});
+                }
             }
         };
         const closePicker = function(){
@@ -170,6 +159,7 @@ class WidgetRegion extends HTMLElement {
                     city:_.city,
                     district:_.district
                 }}));
+                _.dispatchEvent(new UIEvent('change')); 
             }
         };
         _.$input.addEventListener('click', openPicker);
@@ -187,6 +177,7 @@ class WidgetRegion extends HTMLElement {
                         city:_.city,
                         district:_.district
                     }}));
+                    _.dispatchEvent(new UIEvent('input'));
                 }
             }else if(event.target==_.$picker){
                 closePicker();
@@ -198,32 +189,15 @@ class WidgetRegion extends HTMLElement {
             }
         });
     }
-    initData(data){
-        let _ = this;
-        const regex = {
-            'province': /(省|市|特别行政区)/,
-            'city': /(市|地区|自治州|自治州|盟)/,
-            'district': /(市|区|自治县|县|自治旗|旗|特区|林区)/
-        };
+    initData(){
+        const _ = this;
         // 解析文本中的行政区划信息
         if(!_.code&&(_.value||_.province||_.city||_.district)){
             let value = _.value.replace(/[^\u4e00-\u9fa5]/g,'');
-            Object.entries(_.#dataMap).forEach(([code,name])=>{
-                if(_.code){
-                    if(code.indexOf(_.code.replace(/0+$/,''))!=0){
-                        return false;
-                    } 
-                }
-                let level = '';
-                if(code.match(/0000$/)){
-                    level = 'province';
-                }else if(code.match(/00$/)){
-                    level = 'city';
-                }else{
-                    level = 'district';
-                }
-                let short = name;
-                short = name.replace(regex[level],'');
+            getList().forEach(({level,code,name,short})=>{
+                if(_.code&&code.indexOf(_.code.replace(/0+$/,''))!=0){
+                    return false;
+                } 
                 if(value.indexOf(name)==0){
                     _.code = code;
                     value = value.replace(name,'');
@@ -245,20 +219,6 @@ class WidgetRegion extends HTMLElement {
                 }
             });
         }
-        if(_.code){
-            let c = _.code.replace(/\S{4}$/, '0000');
-            if (_.#dataMap[c]) {
-                _.#province = c;
-            }
-            c = _.code.replace(/\S{2}$/, '00');
-            if (_.#dataMap[c] && c != _.#province) {
-                _.#city = c;
-            }
-            c = !_.code.match(/00$/)? _.code : '';
-            if (_.#dataMap[c] && c != _.#city) {
-                _.#district = c;
-            }
-        }
         _.#cache = _.code;
         _.setValue(_.code);
     }
@@ -270,69 +230,79 @@ class WidgetRegion extends HTMLElement {
         _.#province = '';
         _.#city = '';
         _.#district = '';
+        _.$province.innerText = '';
+        _.$city.innerText = '';
+        _.$district.innerText = '';
         if(code){
             _.code = code;
         }
-        if(_.code){
-            let c = _.code.replace(/\d{4}$/, '0000');
-            if (_.#dataMap[c]) {
-                _.#province = c;
-            }
-            c = _.code.replace(/\d{2}$/, '00');
-            if (_.#dataMap[c] && c != _.#province) {
-                _.#city = c;
-            }
-            c = _.code % 100 ? _.code : '';
-            if (_.#dataMap[c] && c != _.#city) {
-                _.#district = c;
-            }
-        }
-        const isTopLevel = _.code.match(/^(11|12|31|50|81|82)/);
-        const isProvinceControl = _.code.match(/90\d{2}$/);
-        _.province = _.#dataMap[_.#province]||'';
-        _.city = _.#dataMap[_.#city]||'';
-        _.district = _.#dataMap[_.#district]||'';
-        let level = 'province';
-        if(isProvinceControl){
-            level = 'city'; 
+        const children = getChildren(_.code);
+        if(children.length){
+            _.$picker.setAttribute('data-group',children[0]['group']);
         }else{
-            if(_.province){
-                level = isTopLevel?'district':'city';
-            }
-            if(_.city){
-                level = 'district';
-            }
-            if(_.district){
-                level = 'district';
-            }
+            const item = getItem(_.code);
+            _.$picker.setAttribute('data-group',item['group']);
         }
-        _.$picker.setAttribute('data-level',level);
+        getTree(_.code).forEach(function({code,name,group},index){
+            if(group=='province'){
+                _.#province = code;
+                _.province = name;
+            }else if(group=='city'){
+                _.#city = code;
+                _.city = name;
+            }else if(group=='district'){
+                _.#district = code;
+                _.district = name;
+            }
+        });
         let value = _.province+(_.city?' / '+_.city:'')+(_.district?' / '+_.district:'');
         _.$input.value = value;
+        _.value = value.replace(/[\s\/]/g,'');
+        _.#internals.setFormValue(_.value);
+        // 省级
         _.$province.innerText =  _.province||'请选择';
-        _.$city.innerText = _.city||(_.province&&!_.district?'请选择':'');
-        _.$district.innerText = _.district||(_.city?'请选择':'');
         _.$province.setAttribute('data-code','000000');
-        _.$provinceList.innerHTML = Object.entries(_.#childrenMap['000000']).map(([code,name])=>{
-            return `<li class="${code==_.#province?'active':''}" data-code="${code}">${name?`<span>${name}</span>`:``}</li>`;
+        _.$provinceList.innerHTML = getChildren().map(({code,name})=>{
+            return `<li class="${getChildren(code).length?'more':''} ${code==_.#province?'active':''}" data-code="${code}">${name?`<span>${name}</span>`:``}</li>`;
         }).join('');
-        if(isTopLevel){
-            _.$cityList.innerHTML = '';
-            _.$district.setAttribute('data-code',_.#province);
-            _.$districtList.innerHTML = Object.entries(_.#province&&_.#childrenMap[_.#province]?_.#childrenMap[_.#province]:{}).map(([code,name])=>{
-                return `<li class="${code==_.#district?'active':''}" data-code="${code}">${name?`<span>${name}</span>`:``}</li>`;
+        // 地级
+        let hasCity = _.#province&&getChildren(_.#province).find(item=>item.group=='city')?true:false;
+        if(hasCity){
+            _.$city.innerText = _.city||(hasCity?'请选择':'');
+            _.$city.setAttribute('data-code',_.#province);
+            _.$cityList.innerHTML = getChildren(_.#province).map(({code,name})=>{
+                return `<li class="${getChildren(code).length?'more':''} ${code==_.#city?'active':''}" data-code="${code}">${name?`<span>${name}</span>`:``}</li>`;
             }).join('');
         }else{
-            _.$city.setAttribute('data-code',_.#province);
-            _.$cityList.innerHTML = Object.entries(_.#province&&_.#childrenMap[_.#province]?_.#childrenMap[_.#province]:{}).map(([code,name])=>{
-                return `<li class="${code==_.#city||code==_.#district?'active':''}" data-code="${code}">${name?`<span>${name}</span>`:``}</li>`;
-            }).join('');
-            _.$district.setAttribute('data-code',_.#city);
-            _.$districtList.innerHTML = Object.entries(_.#city&&_.#childrenMap[_.#city]?_.#childrenMap[_.#city]:{}).map(([code,name])=>{
-                return `<li class="${code==_.#district?'active':''}" data-code="${code}">${name?`<span>${name}</span>`:``}</li>`;
-            }).join('');
+            _.$cityList.innerHTML = '';
         }
-        _.value = value.replace(/[\s\/]/g,'');
+        // 区县级
+        let hasDistrict_province = _.#province&&getChildren(_.#province).find(item=>item.group=='district')?true:false;
+        let hasDistrict_city = _.#city&&getChildren(_.#city).find(item=>item.group=='district')?true:false;
+        if(hasDistrict_province){
+            _.$district.innerText = _.district||(hasDistrict_province?'请选择':'');
+            _.$district.setAttribute('data-code',_.#province);
+            _.$districtList.innerHTML = getChildren(_.#province).map(({code,name})=>{
+                return `<li class="${getChildren(code).length?'more':''} ${code==_.#district?'active':''}" data-code="${code}">${name?`<span>${name}</span>`:``}</li>`;
+            }).join('');
+        }else if(hasDistrict_city){
+            _.$district.innerText = _.district||(hasDistrict_city?'请选择':'');
+            _.$district.setAttribute('data-code',_.#city);
+            _.$districtList.innerHTML = getChildren(_.#city).map(({code,name})=>{
+                return `<li class="${getChildren(code).length?'more':''}${code==_.#district?'active':''}" data-code="${code}">${name?`<span>${name}</span>`:``}</li>`;
+            }).join('');
+        }else{
+            _.$districtList.innerHTML = '';
+        }
+        if(!_.#province){
+            _.$provinceList.scrollTo({top:0,behavior:'instant'});
+        }
+        if(!_.#city){
+            _.$cityList.scrollTo({top:0,behavior:'instant'});
+        }
+        if(!_.#district){
+            _.$districtList.scrollTo({top:0,behavior:'instant'});
+        }
     }
 }
 

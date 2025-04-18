@@ -43,6 +43,8 @@ dialog{
     top: 2px;
     z-index: 999999;
     border: none;
+    border-radius: 5px;
+    overflow: hidden;
 }
 .picker-container{
     display: flex;
@@ -51,20 +53,21 @@ dialog{
     height: 320px;
     padding: 0;
     background: #fff;
-    border: 1px solid #f0f0f0;
-    border-radius: 4px;
+    border: 1px solid #dde2e4;
+    border-radius: 5px;
     box-sizing: border-box;
+    overflow: hidden;
 }
 .picker-container .picker-head{
     position: relative;
     background: #f6f8fa;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid #dde2e488;
     line-height: 36px;
     font-size: 16px;
 }
 .picker-container .picker-head .picker-title{
     padding: 0 15px;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid #dde2e488;
 }
 .picker-container .picker-head .cancel{
     position: absolute;
@@ -107,7 +110,7 @@ dialog{
     display: flex;
     padding: 0 5px;
     list-style: none;
-    background: rgba(0,0,0,0.025);
+    background: rgba(0,0,0,0.02);
     overflow: auto;
 }
 .picker-container .picker-head .selected-list li{
@@ -165,15 +168,32 @@ dialog{
 }
 .picker-container .picker-body ul::-webkit-scrollbar-thumb{
     background: rgba(0,0,0,0.15);
+    border-radius: 2px;
 }
 .picker-container .picker-body li{
     position: relative;
     padding: 0 15px;
-    line-height: 32px;
+    border-bottom: 1px solid #f8f8f8;
+    line-height: 36px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
+    &:last-child{
+        border-bottom: none;
+    }
+}
+.picker-container .picker-body li.more::after{
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    content: '';
+    width: 8px;
+    height: 8px;
+    margin-top: -5px;
+    border-right: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+    transform: rotate(-45deg);
 }
 .picker-container .picker-body li:hover{
     background: rgba(0,0,0,0.025);
@@ -216,10 +236,10 @@ dialog:modal .picker-container .picker-content{
     transition: all 0.3s ease;
     transform: translateX(0);
 }
-dialog:modal[data-level="city"] .picker-container .picker-content{
+dialog:modal[data-group="city"] .picker-container .picker-content{
     transform: translateX(-100%);
 }
-dialog:modal[data-level="district"] .picker-container .picker-content{
+dialog:modal[data-group="district"] .picker-container .picker-content{
     transform: translateX(-200%);
 }
 

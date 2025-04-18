@@ -24,7 +24,7 @@ const banner = `/*!
 
 // 将远程文件转换成本地模块引用
 const remoteUrl = 'https://passer-by.com/data_location/list.json';
-const localPath = 'src/module/data/cn.js';
+const localPath = 'src/data/cn.js';
 
 const commonPlugins = [
     resolve(),
@@ -48,6 +48,6 @@ export default [{
     }],
     plugins: commonPlugins,
     watch: {
-        exclude: 'node_modules/**'
+        exclude: ['node_modules/**', '**/data/**']
     }
 }];

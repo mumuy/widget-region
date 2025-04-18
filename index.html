@@ -113,15 +113,16 @@
 <widget-code language="html">&lt;widget-region province="浙江省" city="杭州市" district="钱塘区"&gt;&lt;/widget-region&gt;
 
 &lt;script type="text/javascript"&gt;
+// 组件事件
 const $region = document.querySelector('widget-region#eventTest');
 const $tip = document.querySelector('.tip');
 $region.addEventListener('onSelect',function(event){
-let data = event.detail;
-$tip.innerText = `输入框选择中: ${data['province']} ${data['city']} ${data['district']}`;
+    let data = event.detail;
+    $tip.innerText = `输入框选择中: ${data['province']} ${data['city']} ${data['district']}`;
 });
 $region.addEventListener('onChange',function(event){
-let data = event.detail;
-$tip.innerText = `输入框已改变: ${data['province']} ${data['city']} ${data['district']}`;
+    let data = event.detail;
+    $tip.innerText = `输入框已改变: ${data['province']} ${data['city']} ${data['district']}`;
 });
 &lt;/script&gt;</widget-code>
                                 </div>
