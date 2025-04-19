@@ -14,7 +14,7 @@ const banner = `/*!
  * ${pkg.description}
  * ${pkg.homepage}
  *
- * Copyright (c) 2024-present, ${pkg.author}
+ * Copyright (c) 2025-present, ${pkg.author}
  *
  * Released under the ${pkg.license} License
  * ${repository}
