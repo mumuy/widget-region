@@ -144,9 +144,7 @@ class WidgetRegion extends HTMLElement {
             }
         };
         const closePicker = function(){
-            if(_.device=='mobile'){
-                document.body.style.overflow = '';
-            }
+            document.body.style.overflow = '';
             _.$picker.close();
             if(_.#cache!=_.code){
                 _.#cache = _.code;
