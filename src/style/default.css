@@ -1,4 +1,5 @@
 :host {
+    position: relative;
     display: inline-block;
     vertical-align: middle;
     container-type: inline-size;
@@ -19,7 +20,6 @@
 }
 
 .mod-region{
-    position: relative;
     width: 100%;
     height: 100%;
 }
@@ -38,9 +38,9 @@
 }
 
 dialog{
-    position: relative;
+    position: absolute;
     left: 0; 
-    top: 2px;
+    top: calc(100% + 2px);
     z-index: 999999;
     border: none;
     border-radius: 5px;
@@ -174,7 +174,7 @@ dialog{
     position: relative;
     padding: 0 15px;
     border-bottom: 1px solid #f8f8f8;
-    line-height: 36px;
+    line-height: 34px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

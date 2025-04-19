@@ -14,8 +14,6 @@ class WidgetRegion extends HTMLElement {
         const _ = this;
         _.#internals = this.attachInternals();
         _.attachShadow({mode:'open'});
-        const userAgent = window.navigator.userAgent;
-        _.device = userAgent.includes('Mobile')?'mobile':'desktop';
     }
     static get observedAttributes(){
         return ['value','code','province','city','district','device'];
@@ -116,7 +114,7 @@ class WidgetRegion extends HTMLElement {
         _.$districtList = _.$picker.querySelector('.district-list');
         _.$close = _.$picker.querySelector('.cancel');
         const openPicker = function(){
-            if(_.device=='mobile'){
+            if(_.device=='mobile'||globalThis?.innerWidth<600){
                 _.$picker.showModal();
                 document.body.style.overflow = 'hidden';
             }else{
