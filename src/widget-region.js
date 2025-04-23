@@ -49,10 +49,10 @@ class WidgetRegion extends HTMLElement {
         return this.setAttribute('district',value);
     }
     get device(){
-        return this.getAttribute('level')||'desktop';
+        return this.getAttribute('device')||'desktop';
     }
     set device(value){
-        return this.setAttribute('level',value);
+        return this.setAttribute('device',value);
     }
     attributeChangedCallback(name, oldValue, newValue){
         if(oldValue!=newValue){
@@ -257,7 +257,7 @@ class WidgetRegion extends HTMLElement {
         _.#internals.setFormValue(_.value);
         // 省级
         _.$province.innerText =  _.province||'请选择';
-        _.$province.setAttribute('data-code','000000');
+        _.$province.setAttribute('data-code',getItem().code);
         _.$provinceList.innerHTML = getChildren().map(({code,name})=>{
             return `<li class="${getChildren(code).length?'more':''} ${code==_.#province?'active':''}" data-code="${code}">${name?`<span>${name}</span>`:``}</li>`;
         }).join('');

@@ -1,10 +1,5 @@
 import dataMap from './data/cn.js';
-
-const regex = {
-    'province': /(省|市|特别行政区)/,
-    'city': /(市|地区|自治州|自治州|盟)/,
-    'district': /(市|区|自治县|县|自治旗|旗|特区|林区)/
-};
+import rule from './rule/cn.js';
 
 const childrenMap = {};
 Object.entries(dataMap).forEach(([code])=>{
@@ -16,29 +11,36 @@ Object.entries(dataMap).forEach(([code])=>{
 });
 
 // 获取当前行政区信息
-export function getItem(code = '000000'){
+export function getItem(code = rule.root.code){
     if(dataMap[code]){
         let name = dataMap[code];
-        let level = '';     // 实际行政级别
-        let group = '';     // 面板归组基本
-        if(code.match(/0000$/)){
-            level = 'province';
-        }else if(code.match(/00$/)){
-            level = 'city';
-        }else{
-            level = 'district';
+        let level = '';                     // 实际行政级别
+        let group = '';                     // 面板归组基本
+        let parentCode = rule.root.code;    // 父代码
+        let [c,provinceCode,cityCode,districtCode] = code.match(rule.match.code);
+        let codeEnd = '';
+        if(districtCode&&districtCode.match(/[^0]/)){
+            level = group = 'district';
+            codeEnd = districtCode;
+            parentCode = code.replace(new RegExp(codeEnd+'$'),'0'.repeat(codeEnd.length));
+            if(!dataMap[parentCode]){
+                group = 'city';
+                codeEnd = cityCode + districtCode;
+                parentCode = code.replace(new RegExp(codeEnd+'$'),'0'.repeat(codeEnd.length));
+            }
+        }else if(cityCode&&cityCode.match(/[^0]/)){
+            level = group = 'city';
+            codeEnd = cityCode + districtCode;
+            parentCode = code.replace(new RegExp(codeEnd+'$'),'0'.repeat(codeEnd.length));
+            if(!dataMap[parentCode]){
+                group = 'province';
+                codeEnd = provinceCode+cityCode+districtCode;
+                parentCode = code.replace(new RegExp(codeEnd+'$'),'0'.repeat(codeEnd.length));
+            }
+        }else if(provinceCode&&provinceCode.match(/[^0]/)){
+            level = group = 'province';
         }
-        let parentCode = '000000';
-        if(code.match(/0000$/)){
-            group = 'province';
-        }else if(code.match(/00$/)||code.match(/90\d{2}$/)||code.match(/^(11|12|31|50|81|82)/)){
-            group = 'city';
-            parentCode = code.replace(/\d{4}$/,'0000');
-        }else{
-            group = 'district';
-            parentCode = code.replace(/\d{2}$/,'00');
-        }
-        let short = name.replace(regex[level],'');
+        let short = name.replace(rule.match[level],'');
         return {
             code,
             name,
@@ -48,11 +50,11 @@ export function getItem(code = '000000'){
             parentCode,
         };
     }
-    return null;
+    return rule.root;
 };
 
 // 获取子行政区列表
-export function getChildren(code = '000000'){
+export function getChildren(code = rule.root.code){
     return childrenMap[code]?Object.entries(childrenMap[code]).map(([code])=>getItem(code)):[];
 };
 
@@ -62,10 +64,10 @@ export function getList(){
 };
 
 // 获取当前行政区各级归属
-export function getTree(code = '000000'){
+export function getTree(code = rule.root.code){
     let result = [];
     let item = getItem(code);
-    while(item){
+    while(item?.parentCode){
         result.push(item);
         item = getItem(item['parentCode']);
     }
