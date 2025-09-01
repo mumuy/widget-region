@@ -56,12 +56,15 @@ class WidgetRegion extends HTMLElement {
     }
     attributeChangedCallback(name, oldValue, newValue){
         if(oldValue!=newValue){
-            this.context&&this.drawQRCode();
+            this.initData();
         }
     }
     connectedCallback () {
         let _ = this;
-        // 模板
+        // 节点
+        _.render();
+        _.initData();
+        // 样式表
         if(_.shadowRoot.adoptedStyleSheets){
             _.shadowRoot.adoptedStyleSheets = [styleSheet];
         }else{
@@ -70,9 +73,6 @@ class WidgetRegion extends HTMLElement {
             $style.textContent = [...styleSheet.cssRules].map(item=>item.cssText).join('');
             _.shadowRoot.appendChild($style);
         }
-        // 节点
-        _.render();
-        _.initData();
     }
     render(){
         let _ = this;
