@@ -9,6 +9,7 @@ class WidgetRegion extends HTMLElement {
     #province;
     #city;
     #district;
+    #hander;
     constructor() {
         super();
         const _ = this;
@@ -55,9 +56,13 @@ class WidgetRegion extends HTMLElement {
         return this.setAttribute('device',value);
     }
     attributeChangedCallback(name, oldValue, newValue){
-        if(oldValue!=newValue){
-            this.initData();
-        }
+        const _ = this;
+        _.#hander&&clearTimeout(_.#hander);
+        _.#hander = setTimeout(function(){
+            if(oldValue!=newValue){
+                _.initData();
+            }
+        },50);
     }
     connectedCallback () {
         let _ = this;
@@ -188,6 +193,7 @@ class WidgetRegion extends HTMLElement {
     initData(){
         const _ = this;
         // 解析文本中的行政区划信息
+
         if(!_.code&&(_.value||_.province||_.city||_.district)){
             let value = _.value.replace(/[^\u4e00-\u9fa5]/g,'');
             getList().forEach(({level,code,name,short})=>{
@@ -226,9 +232,15 @@ class WidgetRegion extends HTMLElement {
         _.#province = '';
         _.#city = '';
         _.#district = '';
-        _.$province.innerText = '';
-        _.$city.innerText = '';
-        _.$district.innerText = '';
+        if(_.$province){
+            _.$province.innerText = '';
+        }
+        if(_.$city){
+            _.$city.innerText = '';
+        }
+        if(_.$district){
+            _.$district.innerText = '';
+        }
         if(code){
             _.code = code;
         }
