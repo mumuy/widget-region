@@ -9,9 +9,11 @@
         <meta name="renderer" content="webkit">
         <meta http-equiv="Cache-Control" content="no-transform" />
         <meta name="format-detection" content="telephone=no"/>
-        <title>中国行政区划选择器</title>
         <meta name="keywords" content="行政区划选择,行政区三级联动,省市区三级联动"/>
         <meta name="description" content="中国行政区省、市、区三级联动"/>
+        <title>中国行政区划选择器</title>
+        <link rel="canonical" href="https://passer-by.com/widget-region/"/>
+        <link rel="stylesheet" href="https://passer-by.com/static/style/common.css">
         <link rel="stylesheet" href="static/style/index.css">
         <script type="text/javascript">
             setTimeout(function(){
@@ -25,23 +27,47 @@
     </head>
     <body>
         <div class="wrapper">
-            <div class="header">
-                <div class="inner">
-                    <div class="mod-head">
+            <header>
+                <div class="mod-head">
+                    <div class="inner">
                         <div class="bd">
-                            <a class="btn" href="https://github.com/mumuy/widget-region/" rel="nofollow" target="_blank" title="Github">
-                                <svg aria-hidden="true" class="octicon" height="20" title="GitHub " version="1.1" viewBox="0 0 16 16" width="24"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59 0.4 0.07 0.55-0.17 0.55-0.38 0-0.19-0.01-0.82-0.01-1.49-2.01 0.37-2.53-0.49-2.69-0.94-0.09-0.23-0.48-0.94-0.82-1.13-0.28-0.15-0.68-0.52-0.01-0.53 0.63-0.01 1.08 0.58 1.23 0.82 0.72 1.21 1.87 0.87 2.33 0.66 0.07-0.52 0.28-0.87 0.51-1.07-1.78-0.2-3.64-0.89-3.64-3.95 0-0.87 0.31-1.59 0.82-2.15-0.08-0.2-0.36-1.02 0.08-2.12 0 0 0.67-0.21 2.2 0.82 0.64-0.18 1.32-0.27 2-0.27 0.68 0 1.36 0.09 2 0.27 1.53-1.04 2.2-0.82 2.2-0.82 0.44 1.1 0.16 1.92 0.08 2.12 0.51 0.56 0.82 1.27 0.82 2.15 0 3.07-1.87 3.75-3.65 3.95 0.29 0.25 0.54 0.73 0.54 1.48 0 1.07-0.01 1.93-0.01 2.2 0 0.21 0.15 0.46 0.55 0.38C13.71 14.53 16 11.53 16 8 16 3.58 12.42 0 8 0z"></path></svg>
-                                <span>Github</span>
-                            </a>
-                            <a class="btn" href="/">个人网站</a>
+                            <div class="logo">
+                                <a href="/"><img src="https://passer-by.com/static/image/public/logo.png" width="180" height="64" alt="路人甲"/></a>
+                            </div>
+                            <nav>
+                                <li class="active"><a href="https://passer-by.com/project.html">项目</a></li>
+                                <li><a href="https://passer-by.com/writing.html">文字</a></li>
+                                <li><a href="https://passer-by.com/photograph.html">摄影</a></li>
+                                <li><a href="https://passer-by.com/comment.html">留言</a></li>
+                                <li><a href="https://passer-by.com/about.html">关于</a></li>
+                            </nav>
+                            <div class="operation">
+                                <a class="btn" href="https://github.com/mumuy/widget-region/" rel="nofollow" target="_blank" title="Github">
+                                    <svg aria-hidden="true" class="octicon" title="GitHub " version="1.1" viewBox="0 0 16 16" width="24" height="24"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59 0.4 0.07 0.55-0.17 0.55-0.38 0-0.19-0.01-0.82-0.01-1.49-2.01 0.37-2.53-0.49-2.69-0.94-0.09-0.23-0.48-0.94-0.82-1.13-0.28-0.15-0.68-0.52-0.01-0.53 0.63-0.01 1.08 0.58 1.23 0.82 0.72 1.21 1.87 0.87 2.33 0.66 0.07-0.52 0.28-0.87 0.51-1.07-1.78-0.2-3.64-0.89-3.64-3.95 0-0.87 0.31-1.59 0.82-2.15-0.08-0.2-0.36-1.02 0.08-2.12 0 0 0.67-0.21 2.2 0.82 0.64-0.18 1.32-0.27 2-0.27 0.68 0 1.36 0.09 2 0.27 1.53-1.04 2.2-0.82 2.2-0.82 0.44 1.1 0.16 1.92 0.08 2.12 0.51 0.56 0.82 1.27 0.82 2.15 0 3.07-1.87 3.75-3.65 3.95 0.29 0.25 0.54 0.73 0.54 1.48 0 1.07-0.01 1.93-0.01 2.2 0 0.21 0.15 0.46 0.55 0.38C13.71 14.53 16 11.53 16 8 16 3.58 12.42 0 8 0z"></path></svg>
+                                    <span>Github</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="mod-bg mod-bg-world">
+                    <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                        <defs>
+                            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
+                        </defs>
+                        <g class="parallax">
+                            <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.4)"></use>
+                            <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.6)"></use>
+                            <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.2)"></use>
+                            <use xlink:href="#gentle-wave" x="48" y="7" fill="rgba(255,255,255,1)"></use>
+                        </g>
+                    </svg>
+                </div>
+            </header>
             <div class="container">
-                <div class="mod-panel">
-                    <div class="inner">
-                        <div class="hd">
+                <div class="inner">
+                    <section class="mod-poster">
+                        <div class="bd">
                             <h1>中国行政区划选择器<span class="tag">组件开源</span></h1>
                             <p>包含中国大陆及港澳台地区行政区划数据，一个标签即可实现行政区选择！操作简单易用，让用户快速选择所在地<p>
                             <div class="buttons">
@@ -55,61 +81,61 @@
                                 </a>
                             </div>
                         </div>
+                    </section>
+                    <section class="mod-panel">
+                        <div class="hd">
+                            <h3 class="title">根据<span class="text-blue">地区名称</span>设置</h3>
+                        </div>
                         <div class="bd">
-                            <div class="box">
-                                <div class="c-hd">
-                                    <span class="title">根据<span class="text-blue">地区名称</span>设置</span>
-                                </div>
-                                <div class="c-bd">
-                                    <div class="field-wrapper">
-                                        <widget-region value="福建省厦门市思明区"></widget-region>
-                                    </div>
-<widget-code language="html">&lt;widget-region value="福建省厦门市思明区"&gt;&lt;/widget-region&gt;</widget-code>
-                                </div>
+                            <div class="input-wrapper">
+                                <widget-region value="福建省厦门市思明区"></widget-region>
                             </div>
-                            <div class="box">
-                                <div class="c-hd">
-                                    <span class="title">根据<span class="text-blue">行政区划代码</span>设置</span>
-                                </div>
-                                <div class="c-bd">
-                                    <div class="field-wrapper">
-                                        <widget-region code="350102"></widget-region>
-                                    </div>
-<widget-code language="html">&lt;widget-region code="350102"&gt;&lt;/widget-region&gt;</widget-code>
-                                </div>
+                            <widget-code language="html">&lt;widget-region value="福建省厦门市思明区"&gt;&lt;/widget-region&gt;</widget-code>
+                        </div>
+                    </section>
+                    <section class="mod-panel">
+                        <div class="hd">
+                            <h3 class="title">根据<span class="text-blue">行政区划代码</span>设置</h3>
+                        </div>
+                        <div class="bd">
+                            <div class="input-wrapper">
+                                <widget-region code="350102"></widget-region>
                             </div>
-                            <div class="box">
-                                <div class="c-hd">
-                                    <span class="title">根据<span class="text-blue">行政区分级</span>设置</span>
-                                </div>
-                                <div class="c-bd">
-                                    <div class="field-wrapper">
-                                        <widget-region province="浙江省" city="杭州市" district="钱塘区"></widget-region>
-                                    </div>
-<widget-code language="html">&lt;widget-region province="浙江省" city="杭州市" district="钱塘区"&gt;&lt;/widget-region&gt;</widget-code>
-                                </div>
+                            <widget-code language="html">&lt;widget-region code="350102"&gt;&lt;/widget-region&gt;</widget-code>
+                        </div>
+                    </section>
+                    <section class="mod-panel">
+                        <div class="hd">
+                            <h3 class="title">根据<span class="text-blue">行政区分级</span>设置</h3>
+                        </div>
+                        <div class="bd">
+                            <div class="input-wrapper">
+                                <widget-region province="浙江省" city="杭州市" district="钱塘区"></widget-region>
                             </div>
-                            <div class="box">
-                                <div class="c-hd">
-                                    <span class="title">事件监听</span>
-                                </div>
-                                <div class="c-bd">
-                                    <div class="field-wrapper">
-                                        <widget-region id="eventTest" province="浙江省" city="杭州市" district="钱塘区"></widget-region>
-                                        <span class="tip"></span>
-                                    </div>
-                                    <script type="text/javascript">
-                                        const $region = document.querySelector('widget-region#eventTest');
-                                        const $tip = document.querySelector('.tip');
-                                        $region.addEventListener('onSelect',function(event){
-                                            let data = event.detail;
-                                            $tip.innerText = `输入框选择中: ${data['province']} ${data['city']} ${data['district']}`;
-                                        });
-                                        $region.addEventListener('onChange',function(event){
-                                            let data = event.detail;
-                                            $tip.innerText = `输入框已改变: ${data['province']} ${data['city']} ${data['district']}`;
-                                        });
-                                    </script>
+                            <widget-code language="html">&lt;widget-region province="浙江省" city="杭州市" district="钱塘区"&gt;&lt;/widget-region&gt;</widget-code>
+                        </div>
+                    </section>
+                    <section class="mod-panel">
+                        <div class="hd">
+                            <span class="title">事件监听</span>
+                        </div>
+                        <div class="bd">
+                            <div class="input-wrapper">
+                                <widget-region id="eventTest" province="浙江省" city="杭州市" district="钱塘区"></widget-region>
+                                <span class="tip"></span>
+                            </div>
+                            <script type="text/javascript">
+                                const $region = document.querySelector('widget-region#eventTest');
+                                const $tip = document.querySelector('.tip');
+                                $region.addEventListener('onSelect',function(event){
+                                    let data = event.detail;
+                                    $tip.innerText = `输入框选择中: ${data['province']} ${data['city']} ${data['district']}`;
+                                });
+                                $region.addEventListener('onChange',function(event){
+                                    let data = event.detail;
+                                    $tip.innerText = `输入框已改变: ${data['province']} ${data['city']} ${data['district']}`;
+                                });
+                            </script>
 <widget-code language="html">&lt;widget-region province="浙江省" city="杭州市" district="钱塘区"&gt;&lt;/widget-region&gt;
 
 &lt;script type="text/javascript"&gt;
@@ -117,28 +143,25 @@
 const $region = document.querySelector('widget-region#eventTest');
 const $tip = document.querySelector('.tip');
 $region.addEventListener('onSelect',function(event){
-    let data = event.detail;
-    $tip.innerText = `输入框选择中: ${data['province']} ${data['city']} ${data['district']}`;
+let data = event.detail;
+$tip.innerText = `输入框选择中: ${data['province']} ${data['city']} ${data['district']}`;
 });
 $region.addEventListener('onChange',function(event){
-    let data = event.detail;
-    $tip.innerText = `输入框已改变: ${data['province']} ${data['city']} ${data['district']}`;
+let data = event.detail;
+$tip.innerText = `输入框已改变: ${data['province']} ${data['city']} ${data['district']}`;
 });
 &lt;/script&gt;</widget-code>
-                                </div>
-                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="mod-article">
-                    <div class="inner">
+                    </section>
+                    <section class="module mod-article">
+                        <div class="hd"><span>关于行政区划选择器</span></div>
                         <div class="bd">
                             <p>行政区划代码，也称行政代码，是国家对县级以上行政区划按一定规则编制的代码。它由 9 位阿拉伯数字组成，前两位表示省级行政区，中间两位表示地级行政区，后两位表示县级行政区。例如，福建省厦门市思明区的行政区划代码是 350203，35 代表福建省，02 代表厦门市，03 代表思明区。通过行政区划代码，可实现对不同地区的精准识别和数据统计等功能。</p>
                             <p>中国行政区划选择器组件应用广泛。在电商场景，助力用户快速准确填写收货地址，像淘宝、京东等平台，提升下单效率；物流领域，用于规划配送区域、管理货物运输路线，优化物流流程；数据分析时，能精准筛选不同区域数据，为市场调研公司分析区域消费特征提供便利；政府公共服务平台，在居民信息登记等功能中，保障地址信息规范准确 。</p>
                         </div>
-                    </div>
+                    </section>
                 </div>
-                <div class="mod-copy">
+                <section class="module mod-copy">
                     <div class="inner">
                         <div class="hd"><span>组件开源</span></div>
                         <div class="bd">
@@ -154,47 +177,36 @@ $region.addEventListener('onChange',function(event){
                             <code><a href="https://passer-by.com/widget-region/dist/widget-region.min.js" target="_blank" rel="nofollow">https://passer-by.com/widget-region/dist/widget-region.min.js</a></code>
                         </div>
                     </div>
+                </section>
+                <div class="inner">
+                    <script type="text/javascript" src="https://passer-by.com/static/script/projects.js"></script>
                 </div>
             </div>
-            <div class="footer">
-                <script type="text/javascript" src="https://passer-by.com/public/script/projects.js"></script>
-                <div class="mod-foot">
-                    <div class="inner">
-                        <div class="bd">
-                            <p>Copyright &copy; <a href="https://passer-by.com">passer-by.com</a></p>
-                        </div>
-                    </div>
-                </div>
+            <footer>
                 <div class="mod-fixedbar">
                     <div class="bd">
-                        <a class="gotop" href="javascript:;" rel="nofollow"><img src="static/image/gotop.png" width="24" height="24"></a>
+                        <ul>
+                            <li>
+                                <a class="gotop" href="javascript:;" rel="nofollow">
+                                    <img src="https://www.passer-by.com/static/image/public/icon-gotop.png" width="24" height="24" alt="回到顶部">
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </div>
+                <div class="mod-foot">
+                    <div class="bd">
+                        <p>
+                            <span>Copyright &copy; 2025</span>
+                            <a href="/">路人甲</a>
+                            <span>版权所有</span>
+                        </p>
+                    </div>
+                </div>
+            </footer>
         </div>
         <script type="text/javascript" src="https://www.passer-by.com/widget-code/dist/widget-code.min.js"></script>
         <script type="text/javascript" src="./dist/widget-region.min.js"></script>
-        <script type="text/javascript">
-            // 底部滚动
-            (function(){
-                let timer = null;
-                let $gotop = document.querySelector('.mod-fixedbar .gotop');
-                $gotop.addEventListener('click',function(){
-                    cancelAnimationFrame(timer);
-                    let scrollTop = document.documentElement.scrollTop;
-                    let move = scrollTop/18;
-                    timer = requestAnimationFrame(function fn(){
-                        var oTop = document.documentElement.scrollTop;
-                        if(oTop > 0){
-                            document.documentElement.scrollTop = oTop - move;
-                            timer = requestAnimationFrame(fn);
-                        }else{
-                            cancelAnimationFrame(timer);
-                        }
-                    });
-                });
-            })();
-        </script>
         <script async defer src="https://cdn.bootcdn.net/ajax/libs/github-buttons/2.21.1/buttons.min.js"></script>
         <script type="text/javascript" src="https://passer-by.com/public/script/stat.js"></script>
     </body>
