@@ -81,7 +81,7 @@ class WidgetRegion extends HTMLElement {
     }
     render(){
         let _ = this;
-            _.shadowRoot.innerHTML = `<div class="mod-region">
+        _.shadowRoot.innerHTML = `<div class="mod-region">
                 <input type="text" placeholder="请选择行政区划" readonly/>
             </div>
             <dialog id="picker" data-level="1">
