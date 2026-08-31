@@ -1,7 +1,7 @@
 import resolve from '@rollup/plugin-node-resolve';          // 使用node_modules包
 import terser from '@rollup/plugin-terser';                 // 代码压缩
 import babel from '@rollup/plugin-babel';                   // ECMAScript兼容
-import {importAssertionsPlugin} from 'rollup-plugin-import-assert';
+import css from "rollup-plugin-import-css";
 import fetchRemoteFile from './fetch-remote-file.mjs';       // 将远程文件转换为本地
 import pkg from './package.json' with { type:'json' };      // 获取package信息
 
@@ -28,12 +28,12 @@ const localPath = 'src/module/data/cn.js';
 
 const commonPlugins = [
     resolve(),
-    importAssertionsPlugin(),
-    terser(),
+    css(),
     babel({
         babelHelpers: 'runtime',
         exclude:'node_modules/**'
     }),
+    terser(),
     fetchRemoteFile(remoteUrl, localPath)
 ];
 
