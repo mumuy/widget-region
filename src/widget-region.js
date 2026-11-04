@@ -23,37 +23,37 @@ class WidgetRegion extends HTMLElement {
         return this.getAttribute('value')||'';
     }
     set value(value){
-        return this.setAttribute('value',value);
+        this.setAttribute('value',value);
     }
     get code(){
         return this.getAttribute('code')||'';
     }
     set code(value){
-        return this.setAttribute('code',value);
+        this.setAttribute('code',value);
     }
     get province(){
         return this.getAttribute('province')||'';
     }
     set province(value){
-        return this.setAttribute('province',value);
+        this.setAttribute('province',value);
     }
     get city(){
         return this.getAttribute('city')||'';
     }
     set city(value){
-        return this.setAttribute('city',value);
+        this.setAttribute('city',value);
     }
     get district(){
         return this.getAttribute('district')||'';
     }
     set district(value){
-        return this.setAttribute('district',value);
+        this.setAttribute('district',value);
     }
     get device(){
         return this.getAttribute('device')||'desktop';
     }
     set device(value){
-        return this.setAttribute('device',value);
+        this.setAttribute('device',value);
     }
     attributeChangedCallback(name, oldValue, newValue){
         const _ = this;
